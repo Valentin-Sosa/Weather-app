@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <form action="">
+        <label for="location">
+            <input type="search" id="location" required>
+        </label>
+        <button type="submit">&#8981;</button>
+    </form>
+    <section>
+        <div id="locationData">
+            <h2 class="location-name"></h2>
+            <span class="date"></span>
+        </div>
+        <div id="principalData">
+            <div id="temp"></div>
+            <div>
+                <span id="condition"></span>
+                <span id="feels"></span>
+                <span id="temp-range"></span>
+            </div>
+        </div>
+        <div id="secondaryData">
+            <div>
+                Humidity
+                <span id="humidity"></span>
+            </div>
+            <div>
+                UV index
+                <span id="uv-index"></span>
+            </div>
+            <div>
+                Sunrise
+                <span id="sunrise"></span>
+            </div>
+            <div>
+                Sunset
+                <span id="sunset"></span>
+            </div>
+            <div>
+                Wind
+                <span id="wind"></span>
+            </div>
+            <div>
+                Cloud cover
+                <span id="cloud-cover"></span>
+            </div>
+            <div>
+                Precipitation 
+                probability
+                <span id="precipprob"></span>
+            </div>
+
+        </div>
+        <div id="weekly-forecast">
+            <div data-index="1" class="day"></div>
+            <div data-index="2" class="day"></div>
+            <div data-index="3" class="day"></div>
+            <div data-index="4" class="day"></div>
+            <div data-index="5" class="day"></div>
+            <div data-index="6" class="day"></div>
+            <div data-index="7" class="day"></div>
+        </div>
+    </section>
+
+</body>
+</html>
