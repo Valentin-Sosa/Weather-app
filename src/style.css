@@ -11,6 +11,7 @@
 
 body
 {
+    position: relative;
     margin-top: 8vh;
     width: 99vw;
     height: 92vh;
@@ -131,6 +132,13 @@ form > button
 
 }
 
+#principal-data > .temp-data
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 #principal-data > .extra-data
 {
     display: flex;
@@ -229,6 +237,15 @@ form > button
     border: 1.5px solid rgba(209, 213, 219, 0.3);
     border-radius: 1.5rem;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 0 .5vw;
+}
+
+#weekly-forecast > div > span
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4vw;
 }
 
 .wday
@@ -236,3 +253,37 @@ form > button
     font-weight: bold;
 }
 
+span > img
+{
+    filter: invert();
+    width: 30px;
+}
+
+.temp-data > img
+{
+    filter: invert();
+    width: 80px;
+    height: 80px;
+}
+
+#error
+{
+    color: #dd2626;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#loading
+{
+    display: none;
+}
+
+#loading.active
+{
+    position: absolute;
+    display: block;
+    width: 150px;
+    height: 150px;
+    top: 35%;
+    left: auto;
+}

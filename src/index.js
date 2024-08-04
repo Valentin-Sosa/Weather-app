@@ -1,10 +1,14 @@
 import './style.css';
 import {format, fromUnixTime} from 'date-fns';
+import {toZonedTime } from 'date-fns-tz';
 
+const dataSection = document.querySelector(".data-section");
 const locationInput = document.getElementById("location");
 const form = document.querySelector("form");
 const metricBtn = document.getElementById("metric");
 const usBtn = document.getElementById("us");
+const error = document.getElementById("error");
+const loading = document.getElementById("loading");
 
 let unit = "metric";
 let unitSymbol = "ºC";
@@ -13,16 +17,35 @@ let location = "";
 
 async function getData(location)
 {
-    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=CC3H66JXEMC8ZNQTSJKSM526F&unitGroup=${unit}&include=days,current&iconSet&elements=hours,datetimeEpoch,cloudcover,conditions,feelslike,hours,humidity,precipprob,sunriseEpoch,sunsetEpoch,temp,tempmax,tempmin,uvindex,windspeed`);
+    dataSection.className = "data-section";
+    loading.className = "active";
+    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=CC3H66JXEMC8ZNQTSJKSM526F&unitGroup=${unit}&include=days,hours,current&iconSet=icons2&elements=hours,datetimeEpoch,conditions,feelslike,hours,humidity,precipprob,sunriseEpoch,sunsetEpoch,temp,tempmax,tempmin,uvindex,windspeed,icon&timezone`);
     const weatherData = await response.json();
-    showData(weatherData);
+    setTimeout(()=>
+    {
+        showData(weatherData);
+        loading.className = "";
+    }, 200);
+    
 }
-
 
 form.addEventListener("submit", e => {
     e.preventDefault();
+    if(locationInput.validity.valueMissing)
+    {
+        error.textContent = "You must enter a location.";
+        return;
+    } 
     location = locationInput.value;
-    getData(location);
+    getData(location)
+    .then(()=> error.textContent = "")
+    .catch(() =>{
+        setTimeout(()=>
+        {
+            loading.className = "";
+            error.textContent = "Location not found."
+        },200);
+    });
     form.reset();
 });
 
@@ -49,11 +72,11 @@ usBtn.addEventListener("click", ()=>
 
 function showData(weatherData)
 {
-    const dataSection = document.querySelector(".data-section");
 
     const locationName = document.querySelector(".location-name");
     const locationDate = document.querySelector(".date");
 
+    const weatherIcon = document.getElementById("weather-icon");
     const temp = document.getElementById("temp");
     const condition = document.getElementById("condition");
     const feelsLike = document.getElementById("feels");
@@ -67,12 +90,14 @@ function showData(weatherData)
     const precipprob = document.getElementById("precipprob");
 
     const weekDays = document.querySelectorAll(".day");
-
+    
     dataSection.className = "data-section active";
-
+    const zonedDate = toZonedTime(new Date(), weatherData.timezone);
     locationName.textContent = weatherData.resolvedAddress;
-    locationDate.textContent = format(new Date(), "eeee d MMMM yyyy | HH:mm");
+    locationDate.textContent = format(zonedDate, "eeee d MMMM yyyy | HH:mm");
+    console.log(weatherData);
 
+    weatherIcon.src = `icons/${weatherData.currentConditions.icon}.png`;
     temp.textContent = `${weatherData.currentConditions.temp}${unitSymbol}`;
     condition.textContent = weatherData.currentConditions.conditions;
     feelsLike.textContent = `Feels like ${weatherData.currentConditions.feelslike}${unitSymbol}`;
@@ -89,8 +114,7 @@ function showData(weatherData)
     {
         const index = day.dataset.index;
         const weekDay = format(fromUnixTime(weatherData.days[index].datetimeEpoch), "EEEE");
-        //day.textContent = `${weekDay} ${weatherData.days[index].tempmax}${unitSymbol} | ${weatherData.days[index].tempmin}${unitSymbol}`;
-        day.innerHTML = `<span class="wday">${weekDay}</span> ${weatherData.days[index].tempmax}${unitSymbol} | ${weatherData.days[index].tempmin}${unitSymbol}`;
-    }
-    )
+        const srcIcon = `icons/${weatherData.days[index].icon}.png`;
+        day.innerHTML = `<span class="wday">${weekDay}</span> <span><img src=${srcIcon}> ${weatherData.days[index].tempmax}${unitSymbol} | ${weatherData.days[index].tempmin}${unitSymbol}</span>`;
+    });
 }

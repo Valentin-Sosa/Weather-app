@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/icons/app-icon.png">
     <title>Weather App</title>
 </head>
 <body>
-    <form action="">
+    <form action="" novalidate>
         <label for="location">
             <input type="search" placeholder="Search location" autocomplete="off" id="location" required>
         </label>
         <button type="submit">&#8981;</button>
     </form>
+    <span id="error"></span>
     <section class="unit-section">
         <button id="metric" class="active">ºC</button>
         <button id="us">ºF</button>
     </section>
+    <img src="icons/loading.svg" alt="loading..." id="loading">
     <section class="data-section">
         <div id="location-data">
             <h2 class="location-name"></h2>
             <span class="date"></span>
         </div>
         <div id="principal-data">
-            <div id="temp"></div>
+            <div class="temp-data">
+                <img src="" alt="weather-icon" id="weather-icon">
+                <div id="temp"></div>
+            </div>
             <div class="extra-data">
                 <span id="condition"></span>
                 <span id="feels"></span>
@@ -55,8 +61,6 @@
                 Wind
                 <span id="wind"></span>
             </div>
-          
-
         </div>
         <div id="weekly-forecast">
             <h2>Weekly forecast</h2>
