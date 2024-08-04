@@ -3,9 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/icons/app-icon.png">
     <title>Weather App</title>
 <script defer src="runtime.js"></script><script defer src="main.js"></script></head>
 <body>
-    
+    <form action="" novalidate>
+        <label for="location">
+            <input type="search" placeholder="Search location" autocomplete="off" id="location" required>
+        </label>
+        <button type="submit">&#8981;</button>
+    </form>
+    <span id="error"></span>
+    <section class="unit-section">
+        <button id="metric" class="active">ºC</button>
+        <button id="us">ºF</button>
+    </section>
+    <img src="icons/loading.svg" alt="loading..." id="loading">
+    <section class="data-section">
+        <div id="location-data">
+            <h2 class="location-name"></h2>
+            <span class="date"></span>
+        </div>
+        <div id="principal-data">
+            <div class="temp-data">
+                <img src="" alt="weather-icon" id="weather-icon">
+                <div id="temp"></div>
+            </div>
+            <div class="extra-data">
+                <span id="condition"></span>
+                <span id="feels"></span>
+                <span id="temp-range"></span>
+            </div>
+        </div>
+        <div id="secondary-data">
+            <div>
+                Humidity
+                <span id="humidity"></span>
+            </div>
+            <div>
+                UV index
+                <span id="uv-index"></span>
+            </div>
+            <div id="pbp-container">
+                Precipitation 
+                probability
+                <span id="precipprob"></span>
+            </div>
+            <div>
+                Sunrise
+                <span id="sunrise"></span>
+            </div>
+            <div>
+                Sunset
+                <span id="sunset"></span>
+            </div>
+            <div>
+                Wind
+                <span id="wind"></span>
+            </div>
+        </div>
+        <div id="weekly-forecast">
+            <h2>Weekly forecast</h2>
+            <div data-index="1" class="day"></div>
+            <div data-index="2" class="day"></div>
+            <div data-index="3" class="day"></div>
+            <div data-index="4" class="day"></div>
+            <div data-index="5" class="day"></div>
+            <div data-index="6" class="day"></div>
+            <div data-index="7" class="day"></div>
+        </div>
+    </section>
+
 </body>
 </html>
